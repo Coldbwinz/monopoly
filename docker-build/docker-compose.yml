@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres
+    container_name: postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: monopoly
+      POSTGRES_USER: compose-postgres
+      POSTGRES_PASSWORD: compose-postgres
+  monopoly:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "8080:8080"
+    container_name: monopoly
+    restart: unless-stopped
+volumes:
+  postgres:
+    driver: local
+
+
+
