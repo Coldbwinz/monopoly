@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - preConditions:
+  - runningAs:
+      username: dev
+  - changeSet:
+      id: 1
+      author: dev
+      changes:
+        - sql:
+            sql: CREATE TABLE users(
+                user_id BIGSERIAL PRIMARY KEY,
+                name VARCHAR(50) NOT NULL,
+                email VARCHAR(255) NOT NULL,
+                password VARCHAR(255) NOT NULL,
+                created_at TIMESTAMP NOT NULL DEFAULT current_timestamp()
+              );
+            comment: Create user's table
+      rollback:
+        - sql:
+            sql: DROP TABLE users;
