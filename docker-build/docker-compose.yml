@@ -1,27 +1,23 @@
+version: '3'
 services:
   db:
-    image: postgres
+    image: library/postgres:10-alpine
     container_name: postgres
+    network_mode: host
     volumes:
       - postgres:/var/lib/postgresql/data
     restart: always
-    ports:
-      - "5432:5432"
     environment:
-      POSTGRES_DB: monopoly
-      POSTGRES_USER: compose-postgres
-      POSTGRES_PASSWORD: compose-postgres
+      - POSTGRES_DB=monopoly
+      - POSTGRES_PASSWORD=dev
   monopoly:
     build:
-      context: .
-      dockerfile: ./Dockerfile
+      context: ../
+      dockerfile: ./docker-build/Dockerfile
     ports:
-      - "8080:8080"
+      - "8081:8080"
     container_name: monopoly
     restart: unless-stopped
 volumes:
   postgres:
     driver: local
-
-
-
